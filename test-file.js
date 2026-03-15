@@ -75,6 +75,49 @@ function loadScript(url) {
   document.body.appendChild(script);
 }
 
+function uploadFile(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  fetch('/api/upload', {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+  });
+}
+
+function executeCommand(cmd) {
+  const child = require('child_process').exec(cmd);
+  return child;
+}
+
+function evalExpression(expr) {
+  return eval(expr);
+}
+
+function setCookie(name, value) {
+  document.cookie = name + "=" + value + "; path=/";
+}
+
+function redirectTo(url) {
+  window.location.href = url;
+}
+
+function getElementById(id) {
+  return document.getElementById(id).innerHTML;
+}
+
+function parseJSON(str) {
+  return JSON.parse(str);
+}
+
+function asyncOperation(data, callback) {
+  setTimeout(function() {
+    callback(data);
+  }, 0);
+}
+
 module.exports = {
   add,
   divide,
@@ -88,4 +131,12 @@ module.exports = {
   authenticate,
   renderUserProfile,
   loadScript,
+  uploadFile,
+  executeCommand,
+  evalExpression,
+  setCookie,
+  redirectTo,
+  getElementById,
+  parseJSON,
+  asyncOperation,
 };
